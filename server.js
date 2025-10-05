@@ -7,7 +7,7 @@ const app = express();
 const logger = progressEstimator();
 app.use(
   cors({
-    origin: "http://localhost:8000",
+    origin: "snap-tube-ui.vercel.app",
     credentials: true,
   })
 );
