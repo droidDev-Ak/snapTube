@@ -23,7 +23,9 @@ app.post("/getVideoInfo", async (req, res) => {
       dumpSingleJson: true,
       noWarnings: true,
       noCheckCertificates: true,
-      ...(youtubeCookies ? { cookies: youtubeCookies } : {})
+      ...(youtubeCookies ? { cookies: youtubeCookies } : {}),
+      ...(proxyUrl ? { proxy: proxyUrl } : {})
+
 
     });
     const info = await logger(infoPromise, `Obtaining ${url}`);
@@ -56,7 +58,9 @@ app.post("/downloadVideo", (req, res) => {
     const downloadProcess = ytdl.exec(videoURL, {
       format: formatId,
       output: "-",
-      ...(youtubeCookies ? { cookies: youtubeCookies } : {})
+      ...(youtubeCookies ? { cookies: youtubeCookies } : {}),
+      ...(proxyUrl ? { proxy: proxyUrl } : {})
+
 
     });
 
