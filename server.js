@@ -5,6 +5,8 @@ import progressEstimator from "progress-estimator";
 
 const app = express();
 const logger = progressEstimator();
+const youtubeCookies = process.env.YTDLP_COOKIES;
+
 app.use(
   cors({
     origin: "https://snap-tube-ui.vercel.app",
@@ -21,6 +23,8 @@ app.post("/getVideoInfo", async (req, res) => {
       dumpSingleJson: true,
       noWarnings: true,
       noCheckCertificates: true,
+      ...(youtubeCookies ? { cookies: youtubeCookies } : {})
+
     });
     const info = await logger(infoPromise, `Obtaining ${url}`);
 
@@ -52,6 +56,8 @@ app.post("/downloadVideo", (req, res) => {
     const downloadProcess = ytdl.exec(videoURL, {
       format: formatId,
       output: "-",
+      ...(youtubeCookies ? { cookies: youtubeCookies } : {})
+
     });
 
     downloadProcess.stdout.pipe(res);
