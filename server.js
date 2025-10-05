@@ -7,14 +7,12 @@ const app = express();
 const logger = progressEstimator();
 app.use(
   cors({
-    origin: "snap-tube-ui.vercel.app",
+    origin: "https://snap-tube-ui.vercel.app",
     credentials: true,
   })
 );
 app.use(express.json());
 const port = process.env.PORT || 3000;
-
-
 
 app.post("/getVideoInfo", async (req, res) => {
   try {
@@ -39,9 +37,9 @@ app.post("/getVideoInfo", async (req, res) => {
 
 app.post("/downloadVideo", (req, res) => {
   try {
-    console.log(req.body.format.asr)
-    const videoURL=req.body.videoURL
-    const formatId=req.body.format.format_id
+    console.log(req.body.format.asr);
+    const videoURL = req.body.videoURL;
+    const formatId = req.body.format.format_id;
     const videoTitle = req.body.title;
     const fileExtension = req.body.format.ext;
 
@@ -53,7 +51,7 @@ app.post("/downloadVideo", (req, res) => {
 
     const downloadProcess = ytdl.exec(videoURL, {
       format: formatId,
-      output: '-'
+      output: "-",
     });
 
     downloadProcess.stdout.pipe(res);
